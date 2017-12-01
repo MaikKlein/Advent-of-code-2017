@@ -47,7 +47,7 @@ mod tests {
         fn test_reverse_captcha(s: &str, result: u32) {
             assert!(reverse_captcha(s).expect("parse err") == result);
         }
-        test_reverse_captcha("1122", 4);
+        test_reverse_captcha("1122", 3);
         test_reverse_captcha("1111", 4);
         test_reverse_captcha("1234", 0);
         test_reverse_captcha("91212129", 9);
