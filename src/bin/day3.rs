@@ -31,19 +31,19 @@ impl Grid {
     }
 
     /// The previous sqroot. For example if the current value is 21, then the current sqroot is
-    /// 5, and the previous sqroot is 2.
+    /// 5, and the previous sqroot is 3.
     pub fn previous_sqroot(&self) -> Option<u32> {
         u32::checked_sub(self.largest_sqroot, 2).map(|n| n.pow(2))
     }
 
     pub fn manhatten_dist(&self) -> u32 {
         if let Some(prev_sq) = self.previous_sqroot() {
-            // A square as for sides. We use this to the center element of each side.
+            // A square has four sides. We use this to calculate the center element for each side.
             let elemnts_per_side = self.row_elements() / 4;
             // The amount of steps to the center element of a spiral row.
             let steps_row = (0..4)
                 .map(|i| {
-                    // We calculate the difference of the center element of every side with out value.
+                    // We calculate the difference of the center element for every side based on the value.
                     // The center element is the `elements_per_side` but with an offset of the `euclid_dist`.
                     let offset = (prev_sq + self.euclid_dist + i * elemnts_per_side) as i32;
                     i32::abs(offset - self.value as i32) as u32
@@ -62,7 +62,21 @@ fn main() {
     let d = Grid::from_value(265149).manhatten_dist();
     println!("Part 1{}", d);
 }
+// 147  142  133  122   59
+// 304    5    4    2   57
+// 330   10    1    1   54
+// 351   11   23   25   26
+// 362  747  806--->   ...
 
+// indices
+
+// 1: (0),
+// 2: (0, 1),
+// 4: (0, 1, 2),
+// 5: (0, 3),
+// 10:(0, 3, 4)
+// 11:(0, 5)
+// 23:(0, 5, 6)
 
 #[cfg(test)]
 mod tests {
